@@ -4,6 +4,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import ErrorBoundary from "./ErrorBoundary";
 import SignupModal from "./signupmodal"; // Import the modal
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
 import './styles/styles.css';
 
 const Login = ({ onLogin }) => {
@@ -11,6 +12,8 @@ const Login = ({ onLogin }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isModalOpen, setModalOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [passwordTyped, setPasswordTyped] = useState(false); // Track if password has been typed
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -23,6 +26,11 @@ const Login = ({ onLogin }) => {
     } catch (error) {
       setError("Failed to sign in");
     }
+  };
+
+  const handleShowPassword = () => {
+    setShowPassword(true);
+    setTimeout(() => setShowPassword(false), 800); // Hide password after 3 seconds
   };
 
   return (
@@ -38,13 +46,29 @@ const Login = ({ onLogin }) => {
             placeholder="Email"
             required
           />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            required
-          />
+          <div className="password-container">
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (e.target.value.length > 0) {
+                  setPasswordTyped(true); // Set to true when the first character is typed
+                } else {
+                  setPasswordTyped(false); // Reset if empty
+                }
+              }}
+              placeholder="Password"
+              required
+              onFocus={handleShowPassword} // Show password on focus
+              onBlur={() => setShowPassword(false)} // Hide password on blur
+            />
+            {passwordTyped && ( // Show icon only if the first character is typed
+              <span onClick={handleShowPassword} className="toggle-password">
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            )}
+          </div>
           <button type="submit">Sign In</button>
           <p>
             Don't have an account?{" "}

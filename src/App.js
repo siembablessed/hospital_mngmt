@@ -24,7 +24,7 @@ function App() {
       {isAuthenticated && <Navbar onLogout={handleLogout} />}
       <ErrorBoundary>
         <Routes>
-          <Route path="/" element={<Navigate to="/signup" />} />
+          <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/home" element={isAuthenticated ? <Home /> : <Navigate to="/login" />} />
