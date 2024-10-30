@@ -1,0 +1,96 @@
+.auth-container {
+    margin: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(to right, #17b97b, #117a70); /* Gradient background */
+    height: 100vh; /* Full height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px; /* Add padding for mobile */
+  }
+  
+  .auth-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 400px; /* Limit form width */
+    width: 100%; /* Full width for small screens */
+    max-height: 90vh; /* Prevent form from covering entire height */
+    overflow-y: auto; /* Enable scrolling if content is too long */
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333; /* Dark text color */
+  }
+  
+  input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Include padding in width */
+    font-size: 1rem; /* Increase font size */
+  }
+  
+  button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #117a70; /* Button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem; /* Increase font size */
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #17b97b; /* Darker shade on hover */
+  }
+  
+  .error-message {
+    color: red;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    text-align: center;
+    margin-top: 1rem;
+    color: #666; /* Lighter text color */
+  }
+  
+  /* Media Queries for extra small screens */
+  @media (max-width: 480px) {
+    .auth-container {
+      padding: 10px; /* Reduce padding for very small screens */
+    }
+  
+    .auth-form {
+      padding: 1.5rem; /* Adjust padding */
+    }
+  
+    h2 {
+      font-size: 1.5rem; /* Smaller heading on mobile */
+    }
+  
+    input {
+      font-size: 0.9rem; /* Smaller input text */
+    }
+  
+    button {
+      font-size: 0.9rem; /* Smaller button text */
+    }
+  }
+  
