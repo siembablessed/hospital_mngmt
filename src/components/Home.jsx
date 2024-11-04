@@ -3,7 +3,7 @@ import React from 'react';
 const Home = () => {
   return (
     <div className="about-container">
-      <h1>About Us</h1>
+      <h1>Welcome to Rujeko PolyClinic</h1>
       <p>
         Welcome to our application! This platform is designed to help users manage patience records efficiently while ensuring ease of use. Our aim is to provide a simple and intuitive interface for both new and experienced users.
       </p>

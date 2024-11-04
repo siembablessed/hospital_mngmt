@@ -2,15 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { auth } from '../firebase'; // Adjust the path as necessary
 import { signOut } from 'firebase/auth';
+import { FaHome, FaInfoCircle, FaUserAlt, FaSignOutAlt } from 'react-icons/fa';
 import './styles/navbar.css';
 
 const Navbar = ({ onLogout }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -21,36 +16,29 @@ const Navbar = ({ onLogout }) => {
   };
 
   return (
-    <nav className="navbar">
+    <nav className="navbar sidebar">
       <div className="navbar-logo">
-        <h2>CIMAS HEALTHATHON'24</h2>
+        <h2>CIMAS</h2>
       </div>
-      <ul className={isOpen ? "nav-links open" : "nav-links"}>
+      <ul className="nav-links">
         <li>
-          <Link to="/home" className="nav-link" onClick={toggleMenu}>
-            Home
+          <Link to="/home" className="nav-link">
+            <FaHome className="icon" /> Home
           </Link>
         </li>
         <li>
-          <Link to="/about" className="nav-link" onClick={toggleMenu}>
-            About
+          <Link to="/about" className="nav-link">
+            <FaInfoCircle className="icon" /> About
           </Link>
         </li>
         <li>
-          <Link to="/records" className="nav-link" onClick={toggleMenu}>
-            Patient Records
-          </Link>
-        </li>
-        <li>
-          <Link onClick={handleLogout} className="nav-link">
-            Logout
+          <Link to="/records" className="nav-link">
+            <FaUserAlt className="icon" /> Patient Records
           </Link>
         </li>
       </ul>
-      <div className="hamburger" onClick={toggleMenu}>
-        <span className={isOpen ? "bar open" : "bar"}></span>
-        <span className={isOpen ? "bar open" : "bar"}></span>
-        <span className={isOpen ? "bar open" : "bar"}></span>
+      <div className="nav-link logout" onClick={handleLogout}>
+        <FaSignOutAlt className="icon" /> Logout
       </div>
     </nav>
   );

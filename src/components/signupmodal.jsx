@@ -14,6 +14,8 @@ const SignupModal = ({ isOpen, onClose }) => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordTyped, setPasswordTyped] = useState(false); // Track if password has been typed
   const [confirmPasswordTyped, setConfirmPasswordTyped] = useState(false); // Track if confirm password has been typed
+  const [passwordStrength, setPasswordStrength] = useState(0);
+  const [isShaking, setIsShaking] = useState(false); // For shaking effect
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -22,6 +24,7 @@ const SignupModal = ({ isOpen, onClose }) => {
 
     if (password !== confirmPassword) {
       setError("Passwords do not match!");
+      setIsShaking(true); // Trigger shaking effect
       return;
     }
 
@@ -38,6 +41,7 @@ const SignupModal = ({ isOpen, onClose }) => {
 
     if (errors.length > 0) {
       setError(errors.join(" "));
+      setIsShaking(true); // Trigger shaking effect
       return;
     }
 
@@ -49,6 +53,7 @@ const SignupModal = ({ isOpen, onClose }) => {
       }, 2000); // Auto close after 2 seconds
     } catch (err) {
       setError(err.message);
+      setIsShaking(true); // Trigger shaking effect
     }
   };
 
@@ -60,6 +65,26 @@ const SignupModal = ({ isOpen, onClose }) => {
   const handleShowConfirmPassword = () => {
     setShowConfirmPassword(true);
     setTimeout(() => setShowConfirmPassword(false), 800); // Hide confirm password after 3 seconds
+  };
+
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    evaluatePasswordStrength(newPassword);
+    if (newPassword.length > 0) {
+      setPasswordTyped(true); // Set to true when the first character is typed
+    } else {
+      setPasswordTyped(false); // Reset if empty
+    }
+  };
+
+  const evaluatePasswordStrength = (password) => {
+    let strength = 0;
+    if (password.length >= 8) strength += 1; // Length check
+    if (/[A-Z]/.test(password)) strength += 1; // Uppercase check
+    if (/[0-9]/.test(password)) strength += 1; // Number check
+    if (/[\W_]/.test(password)) strength += 1; // Special character check
+    setPasswordStrength(strength);
   };
 
   if (!isOpen) return null;
@@ -76,7 +101,7 @@ const SignupModal = ({ isOpen, onClose }) => {
           </ul>
         )}
         {successMessage && <p className="success-message">{successMessage}</p>}
-        <form onSubmit={handleSignup}>
+        <form onSubmit={handleSignup} className={isShaking ? "shake" : ""}>
           <input
             type="email"
             placeholder="Email"
@@ -89,14 +114,7 @@ const SignupModal = ({ isOpen, onClose }) => {
               type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                if (e.target.value.length > 0) {
-                  setPasswordTyped(true); // Set to true when the first character is typed
-                } else {
-                  setPasswordTyped(false); // Reset if empty
-                }
-              }}
+              onChange={handlePasswordChange}
               required
               onFocus={handleShowPassword} // Show password on focus
               onBlur={() => setShowPassword(false)} // Hide password on blur
@@ -106,6 +124,18 @@ const SignupModal = ({ isOpen, onClose }) => {
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             )}
+          </div>
+          <div className="password-strength-bar">
+            <div
+              className="strength-indicator"
+              style={{
+                width: `${(passwordStrength / 4) * 100}%`,
+                backgroundColor: passwordStrength === 0 ? "#e0e0e0" :
+                  passwordStrength === 1 ? "red" :
+                  passwordStrength === 2 ? "orange" :
+                  passwordStrength === 3 ? "yellow" : "green"
+              }}
+            />
           </div>
           <div className="password-container">
             <input

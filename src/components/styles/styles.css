@@ -66,7 +66,7 @@
   }
   
   p {
-    text-align: center;
+    /* text-align: center; */
     margin-top: 1rem;
     color: #666; /* Lighter text color */
   }
@@ -93,4 +93,36 @@
       font-size: 0.9rem; /* Smaller button text */
     }
   }
-  
+
+  /* styles/styles.css */
+
+/* Shake animation */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+}
+
+/* Error state for input */
+.input-error {
+  border: 1px solid red; /* Red border for error state */
+  animation: shake 0.5s; /* Shake effect */
+}
+
+/* General input styles */
+input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc; /* Default border */
+  border-radius: 5px;
+}
+
+
+/* main-content styling */
+.main-content {
+  margin-left: 195px; /* Same as the width of the sidebar */
+  padding: 20px;
+  min-height: 100vh;
+}
